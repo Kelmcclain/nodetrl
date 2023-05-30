@@ -1,6 +1,41 @@
-const _ = require('lodash')
+const { error } = require('console');
+const { readFile } = require('fs');
+const { result } = require('lodash');
+const { reject } = require('lodash');
+const path = require('path');
 
-const items = [1,[2, [3, [4]]]]
-const newItems = _.flattenDeep(items)
-console.log(newItems)
+const getText = (path) => {
+    return new Promise((resolve, reject) => {
+        readFile(path, 'utf8', (err, data) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(data)
+            }
+        })
+    })
+}
+
+const start = async() => {
+
+    try {
+        const first = await getText('./content/first.txt')
+        const second = await getText('./content/second.txt')
+
+        console.log(first, second)
+
+    } catch (error) {
+        console.log(error)
+
+    }
+
+}
+
+
+start()
+
+
+// getText('./content/first.txt')
+// .then((result) => console.log(result))
+// .catch((err) => console.log(err))
 
